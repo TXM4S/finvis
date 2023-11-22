@@ -1,0 +1,15 @@
+
+.container{
+    border-radius: 10px;
+    width: 50%;
+    background-color: rgb(44, 82, 112);
+    padding: 20px;
+    text-align: left;
+    margin: 5px;
+}
+
+.container h1{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+}
