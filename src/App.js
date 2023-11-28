@@ -9,8 +9,8 @@ function App() {
 
   const ticker = "AAPL";
   // YYYY-MM-DD
-  const from = "2023-10-22";
-  const to = "2023-11-22";
+  const from = "2023-10-27";
+  const to = "2023-11-27";
 
 
 
@@ -34,47 +34,17 @@ function App() {
   }
 
   const getNewsData = () => {
-    if (range == null) {
-        return null;
-    }
-
-    const from = parseDate(range[0]);
-    const to = parseDate(range[1]);
-
-    console.log(from);
-    console.log(to);
-
-    const url = "https://newsapi.org/v2/everything?q=AAPL&from="+ from +"&to="+ to +"&sortBy=publishedAt&apiKey=28741d24c78d4657b5de4ae5aa2080f1";
-
-    console.log(url);
+    const url = "https://newsapi.org/v2/everything?q=apple&from="+ from +"&to="+ to +"&sortBy=popular&apiKey=28741d24c78d4657b5de4ae5aa2080f1";
 
     return fetch(url)
     .then((response) => response.json())
     .then((data) => {setNewsData(data); setLoading(false);})
   }
 
-  const populateArticles = () => { 
-    if(newsData.articles == null) {
-      return null;
-    }
-    let temp = [];
-    newsData.articles.forEach((article) => {
-      temp.push(
-        <Article title={article.title} author={article.author} url={article.url} date={article.publishedAt} />
-      );
-    })
-    setArticles(temp);
-  }
-
   useEffect(() => {
     getStockData();
-  }, []);
-
-  useEffect(() => {
     getNewsData();
-    populateArticles();
-    console.log(articles)
-  }, [range]);
+  }, []);
 
 
   const parseDate = (date) => {
@@ -92,10 +62,8 @@ function App() {
         <h2>Stock: {ticker}</h2>
         <h2>From: {from}</h2> 
         <h2>To: {to}</h2>
-        {(range == null) ?  <h2>Range : unselected </h2> : <h2>Range: {parseDate(range[0])} to {parseDate(range[1])}</h2>}
       </div>
-      {(loading) ? <SyncLoader color='white'/> : <LineChart data={stockData} width={1200} height={300} handleRangeChange={handleRangeChange} />}
-      {articles}
+      {(loading) ? <SyncLoader color='white'/> : <LineChart stockData={stockData} newsData={newsData} width={1200} height={300} handleRangeChange={handleRangeChange} />}
     </div>
   );
 }
