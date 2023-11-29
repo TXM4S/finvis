@@ -9,20 +9,15 @@ function App() {
 
   const ticker = "AAPL";
   // YYYY-MM-DD
-  const from = "2023-10-27";
-  const to = "2023-11-27";
-
-
-
+  const from = "2023-10-29";
+  const to = "2023-11-29";
 
   const [stockData, setStockData] = useState([]);
   const [newsData, setNewsData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [range, setRange] = useState(null);
-  const [articles, setArticles] = useState([]);
 
   const handleRangeChange = (range) => {
-    setRange(range);
+    // setRange(range);
   }
 
   const getStockData = () => {
@@ -38,22 +33,23 @@ function App() {
 
     return fetch(url)
     .then((response) => response.json())
-    .then((data) => {setNewsData(data); setLoading(false);})
+    .then((data) => {setNewsData(organiseNewsData(data)); setLoading(false);})
+  }
+
+  const organiseNewsData = (data) => {
+    data.articles.map((article) => {
+      let articleDate = new Date(article.publishedAt);
+      articleDate.setHours(0,0,0,0);
+      article.publishedAt = articleDate.getTime();
+    })
+
+    return Object.groupBy(data.articles, ({publishedAt}) => publishedAt);
   }
 
   useEffect(() => {
     getStockData();
     getNewsData();
   }, []);
-
-
-  const parseDate = (date) => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
 
   return (
     <div className="App">

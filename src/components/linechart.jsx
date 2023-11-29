@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
+import '../styles/linechart.css';
 
 const LineChart = (props) => {
     
     const { stockData, newsData, width, height } = props;
-    const articles = newsData.articles;
     console.log(stockData)
 
     const margin = { top: 20, right: 30, bottom: 30, left: 40 };
 
-    console.log(articles)
+    console.log(newsData)
 
     const x = d3.scaleUtc()
         .domain(d3.extent(stockData, d => d.t))
@@ -41,7 +41,48 @@ const LineChart = (props) => {
             .attr("text-anchor", "start")
             .attr("font-weight", "bold"));
 
+    const getGlyphs = () => {
+        if (!newsData) return null;
+        const glyphs = [];
+        for (const article in newsData) {
+            const stock = stockData.find(d => {
+                const stockDate = new Date(d.t);
+                stockDate.setHours(0,0,0,0);
+                return stockDate.getTime() == article;
+            });
+            const cy = stock ? y(stock.c) : height / 2;
+            const radius = newsData[article].length * 3;
+            const date = new Date(parseInt(article)).toLocaleDateString();
+            const tooltipText = `${date} ${newsData[article].length} articles`;
+            glyphs.push(
+                <circle 
+                    key={article} 
+                    cx={x(article)} 
+                    cy={cy} 
+                    r={radius} 
+                    fill="royalblue"
+                    onMouseOver={(e) => {
+                        // Show tooltip
+                        d3.select("#tooltip")
+                            .style("left", e.pageX + "px")
+                            .style("top", (e.pageY - 50)+ "px")
+                            .style("opacity", 1)
+                            .text(tooltipText)
+                    }}
+                    onMouseOut={(e) => {
+                        // Hide tooltip
+                        d3.select("#tooltip")
+                            .style("opacity", 0);
+                    }}
+                />
+            );
+        }
+        return glyphs;
+    }
+
     return (
+        <>
+        <div id="tooltip"></div>
         <svg width={width} height={height}>
             <defs>
                 <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
@@ -54,23 +95,10 @@ const LineChart = (props) => {
                 <path fill="url(#gradient)" d={area(stockData)} />
                 <g ref={node => d3.select(node).call(xAxis)} />
                 <g ref={node => d3.select(node).call(yAxis)} />
-                {articles && articles.map((article, index) => {
-                    const articleDate = new Date(article.publishedAt);
-                    //set it to 00:00 on the day
-                    articleDate.setHours(0,0,0,0);
-                    console.log(articleDate)
-                    // Find the corresponding stockData object
-                    const stock = stockData.find(d => {
-                        const stockDate = new Date(d.t);
-                        stockDate.setHours(0,0,0,0);
-                        return stockDate.getTime() === articleDate.getTime();
-                    });
-                    // Calculate the cy attribute
-                    const cy = stock ? y(stock.c) : height / 2;
-                    return <circle key={index} cx={x(articleDate)} cy={cy} r={5} fill="red" />;
-                })}
+                {getGlyphs()}
             </g>
         </svg>
+        </>
     );
 };
 
