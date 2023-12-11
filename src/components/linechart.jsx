@@ -3,7 +3,7 @@ import '../styles/linechart.css';
 
 const LineChart = (props) => {
     
-    const { stockData, newsData, width, height } = props;
+    const { stockData, newsData, width, height, handleSetArticles } = props;
     console.log(stockData)
 
     const margin = { top: 20, right: 30, bottom: 30, left: 40 };
@@ -73,6 +73,10 @@ const LineChart = (props) => {
                         // Hide tooltip
                         d3.select("#tooltip")
                             .style("opacity", 0);
+                    }}
+                    onMouseDown={(e)=>{
+                        console.log(newsData[article])
+                        handleSetArticles(newsData[article])
                     }}
                 />
             );
