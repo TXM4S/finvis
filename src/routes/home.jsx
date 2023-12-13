@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/user";
 
 const Home = () => {
-
   const { user, isLoading } = useContext(UserContext);
 
   return (
@@ -22,13 +21,16 @@ const Home = () => {
           understanding how the news effects stock price simple.
         </p>
       </div>
-      { user ? <></> :
-      <div className="flex flex-row absolute top-20 right-10">
-        <p className="text-3xl font-black mr-20 align-middle">
-          LOGIN TO GET STARTED{" "}
-        </p>
-        <FaArrowTurnUp className="text-3xl align-top" />
-      </div>}
+      {user ? (
+        <></>
+      ) : (
+        <div className="flex flex-row absolute top-20 right-10">
+          <p className="text-3xl font-black mr-20 align-middle">
+            LOGIN TO GET STARTED{" "}
+          </p>
+          <FaArrowTurnUp className="text-3xl align-top" />
+        </div>
+      )}
     </div>
   );
 };

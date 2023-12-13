@@ -1,0 +1,153 @@
+[debug] [2023-12-13T01:04:28.239Z] ----------------------------------------------------------------------
+[debug] [2023-12-13T01:04:28.241Z] Command:       /opt/homebrew/Cellar/node/20.7.0/bin/node /opt/homebrew/bin/firebase deploy
+[debug] [2023-12-13T01:04:28.241Z] CLI Version:   13.0.1
+[debug] [2023-12-13T01:04:28.241Z] Platform:      darwin
+[debug] [2023-12-13T01:04:28.241Z] Node Version:  v20.7.0
+[debug] [2023-12-13T01:04:28.241Z] Time:          Wed Dec 13 2023 01:04:28 GMT+0000 (Greenwich Mean Time)
+[debug] [2023-12-13T01:04:28.241Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-12-13T01:04:28.279Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-12-13T01:04:28.279Z] > authorizing via signed-in user (tomasmccracken@icloud.com)
+[debug] [2023-12-13T01:04:28.279Z] [iam] checking project finvis-8304 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-12-13T01:04:28.280Z] > refreshing access token with scopes: []
+[debug] [2023-12-13T01:04:28.280Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-12-13T01:04:28.280Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-12-13T01:04:28.422Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-12-13T01:04:28.423Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-12-13T01:04:28.437Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/finvis-8304:testIamPermissions [none]
+[debug] [2023-12-13T01:04:28.438Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/finvis-8304:testIamPermissions x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:28.438Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/finvis-8304:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-12-13T01:04:29.131Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/finvis-8304:testIamPermissions 200
+[debug] [2023-12-13T01:04:29.131Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/finvis-8304:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-12-13T01:04:29.132Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/finvis-8304/serviceAccounts/finvis-8304@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-12-13T01:04:29.132Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/finvis-8304/serviceAccounts/finvis-8304@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-12-13T01:04:29.883Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/finvis-8304/serviceAccounts/finvis-8304@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-12-13T01:04:29.883Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/finvis-8304/serviceAccounts/finvis-8304@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-12-13T01:04:29.884Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 [none]
+[debug] [2023-12-13T01:04:30.127Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 200
+[debug] [2023-12-13T01:04:30.128Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 {"projectId":"finvis-8304","projectNumber":"883513772508","displayName":"finvis","name":"projects/finvis-8304","resources":{"hostingSite":"finvis-8304"},"state":"ACTIVE","etag":"1_c540b271-4e6a-4aca-a4ee-ca67c6d94122"}
+[info] 
+[info] === Deploying to 'finvis-8304'...
+[info] 
+[info] i  deploying firestore, functions, hosting 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script. 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2023-12-13T01:04:35.621Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/finvis-8304:test [none]
+[debug] [2023-12-13T01:04:35.621Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/finvis-8304:test [omitted]
+[debug] [2023-12-13T01:04:36.416Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/finvis-8304:test 200
+[debug] [2023-12-13T01:04:36.416Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/finvis-8304:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2023-12-13T01:04:36.418Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 [none]
+[debug] [2023-12-13T01:04:36.648Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 200
+[debug] [2023-12-13T01:04:36.649Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304 {"projectId":"finvis-8304","projectNumber":"883513772508","displayName":"finvis","name":"projects/finvis-8304","resources":{"hostingSite":"finvis-8304"},"state":"ACTIVE","etag":"1_c540b271-4e6a-4aca-a4ee-ca67c6d94122"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-12-13T01:04:36.653Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-12-13T01:04:36.653Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:36.657Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-12-13T01:04:36.658Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:36.661Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudbuild.googleapis.com [none]
+[debug] [2023-12-13T01:04:36.661Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudbuild.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:36.665Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/artifactregistry.googleapis.com [none]
+[debug] [2023-12-13T01:04:36.665Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/artifactregistry.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:37.541Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudbuild.googleapis.com 200
+[debug] [2023-12-13T01:04:37.542Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:37.544Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/artifactregistry.googleapis.com 200
+[debug] [2023-12-13T01:04:37.544Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:37.546Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudfunctions.googleapis.com 200
+[debug] [2023-12-13T01:04:37.546Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:37.547Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/runtimeconfig.googleapis.com 200
+[debug] [2023-12-13T01:04:37.547Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-12-13T01:04:37.548Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304/adminSdkConfig [none]
+[debug] [2023-12-13T01:04:37.723Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304/adminSdkConfig 200
+[debug] [2023-12-13T01:04:37.723Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/finvis-8304/adminSdkConfig {"projectId":"finvis-8304","storageBucket":"finvis-8304.appspot.com"}
+[debug] [2023-12-13T01:04:37.723Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/finvis-8304/configs [none]
+[debug] [2023-12-13T01:04:38.084Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/finvis-8304/configs 200
+[debug] [2023-12-13T01:04:38.084Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/finvis-8304/configs {}
+[debug] [2023-12-13T01:04:38.087Z] Validating nodejs source
+[debug] [2023-12-13T01:04:38.524Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log",
+    "test": "jest"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[debug] [2023-12-13T01:04:38.524Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2023-12-13T01:04:38.525Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-12-13T01:04:38.530Z] Found firebase-functions binary at '/Users/tom/Documents/year3/dis/Prototype/finvis/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8085
+
+[debug] [2023-12-13T01:04:38.710Z] Got response from /__/functions.yaml {"endpoints":{"getNewsData":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["europe-west2"],"labels":{},"callableTrigger":{},"entryPoint":"getNewsData"},"getStockData":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","region":["europe-west2"],"labels":{},"callableTrigger":{},"entryPoint":"getStockData"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged /Users/tom/Documents/year3/dis/Prototype/finvis/functions (94.89 KB) for uploading 
+[debug] [2023-12-13T01:04:43.778Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/finvis-8304/locations/-/functions [none]
+[debug] [2023-12-13T01:04:44.334Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/finvis-8304/locations/-/functions 200
+[debug] [2023-12-13T01:04:44.335Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/finvis-8304/locations/-/functions {}
+[debug] [2023-12-13T01:04:44.337Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/finvis-8304/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2023-12-13T01:04:45.377Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/finvis-8304/locations/-/functions 200
+[debug] [2023-12-13T01:04:45.377Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/finvis-8304/locations/-/functions {"functions":[{"name":"projects/finvis-8304/locations/europe-west2/functions/getNewsData","buildConfig":{"build":"projects/883513772508/locations/europe-west2/builds/f5e8af04-bea8-45a6-8623-bfe02e8f03ec","runtime":"nodejs18","entryPoint":"getNewsData","source":{"storageSource":{"bucket":"gcf-v2-sources-883513772508-europe-west2","object":"getNewsData/function-source.zip","generation":"1702420565647175"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-883513772508-europe-west2","object":"getNewsData/function-source.zip","generation":"1702420565647175"}},"dockerRegistry":"ARTIFACT_REGISTRY"},"serviceConfig":{"service":"projects/finvis-8304/locations/europe-west2/services/getnewsdata","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"finvis-8304\",\"storageBucket\":\"finvis-8304.appspot.com\"}","GCLOUD_PROJECT":"finvis-8304","EVENTARC_CLOUD_EVENT_SOURCE":"projects/finvis-8304/locations/europe-west2/services/getNewsData","FUNCTION_TARGET":"getNewsData"},"maxInstanceCount":100,"ingressSettings":"ALLOW_ALL","uri":"https://getnewsdata-4cnzf6hada-nw.a.run.app","serviceAccountEmail":"883513772508-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"getnewsdata-00002-rok","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2023-12-12T22:36:59.220119763Z","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c0646aedf978e196f7513588bffecae17405808c"},"environment":"GEN_2","url":"https://europe-west2-finvis-8304.cloudfunctions.net/getNewsData"},{"name":"projects/finvis-8304/locations/europe-west2/functions/getStockData","buildConfig":{"build":"projects/883513772508/locations/europe-west2/builds/f5e8af04-bea8-45a6-8623-bfe02e8f03ec","runtime":"nodejs18","entryPoint":"getStockData","source":{"storageSource":{"bucket":"gcf-v2-sources-883513772508-europe-west2","object":"getStockData/function-source.zip","generation":"1702420613030362"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""},"sourceProvenance":{"resolvedStorageSource":{"bucket":"gcf-v2-sources-883513772508-europe-west2","object":"getStockData/function-source.zip","generation":"1702420613030362"}},"dockerRegistry":"ARTIFACT_REGISTRY"},"serviceConfig":{"service":"projects/finvis-8304/locations/europe-west2/services/getstockdata","timeoutSeconds":60,"environmentVariables":{"FIREBASE_CONFIG":"{\"projectId\":\"finvis-8304\",\"storageBucket\":\"finvis-8304.appspot.com\"}","GCLOUD_PROJECT":"finvis-8304","EVENTARC_CLOUD_EVENT_SOURCE":"projects/finvis-8304/locations/europe-west2/services/getStockData","FUNCTION_TARGET":"getStockData","FUNCTION_SIGNATURE_TYPE":"http"},"maxInstanceCount":100,"ingressSettings":"ALLOW_ALL","uri":"https://getstockdata-4cnzf6hada-nw.a.run.app","serviceAccountEmail":"883513772508-compute@developer.gserviceaccount.com","availableMemory":"256Mi","allTrafficOnLatestRevision":true,"revision":"getstockdata-00002-sag","maxInstanceRequestConcurrency":80,"availableCpu":"1"},"state":"ACTIVE","updateTime":"2023-12-12T22:37:08.381225514Z","labels":{"deployment-tool":"cli-firebase","deployment-callable":"true","firebase-functions-hash":"c0646aedf978e196f7513588bffecae17405808c"},"environment":"GEN_2","url":"https://europe-west2-finvis-8304.cloudfunctions.net/getStockData"}]}
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2023-12-13T01:04:45.382Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/run.googleapis.com [none]
+[debug] [2023-12-13T01:04:45.382Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/run.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:45.387Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/eventarc.googleapis.com [none]
+[debug] [2023-12-13T01:04:45.388Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/eventarc.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:45.390Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/pubsub.googleapis.com [none]
+[debug] [2023-12-13T01:04:45.391Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/pubsub.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:45.393Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/storage.googleapis.com [none]
+[debug] [2023-12-13T01:04:45.393Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/storage.googleapis.com x-goog-quota-user=projects/finvis-8304
+[debug] [2023-12-13T01:04:46.235Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/pubsub.googleapis.com 200
+[debug] [2023-12-13T01:04:46.235Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/pubsub.googleapis.com [omitted]
+[info] ✔  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:46.241Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/run.googleapis.com 200
+[debug] [2023-12-13T01:04:46.241Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/run.googleapis.com [omitted]
+[info] ✔  functions: required API run.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:46.241Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/eventarc.googleapis.com 200
+[debug] [2023-12-13T01:04:46.241Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/eventarc.googleapis.com [omitted]
+[info] ✔  functions: required API eventarc.googleapis.com is enabled 
+[debug] [2023-12-13T01:04:46.278Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/storage.googleapis.com 200
+[debug] [2023-12-13T01:04:46.279Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/finvis-8304/services/storage.googleapis.com [omitted]
+[info] ✔  functions: required API storage.googleapis.com is enabled 
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2023-12-13T01:04:46.280Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/883513772508/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2023-12-13T01:04:46.281Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/883513772508/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2023-12-13T01:04:46.746Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/883513772508/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2023-12-13T01:04:46.746Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/883513772508/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-883513772508@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"109296113258303596640"}}
