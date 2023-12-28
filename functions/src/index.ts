@@ -86,13 +86,17 @@ export const mutateNewsData = (articles: Article[]) => {
     return { ...article, t: articleDate.getTime() };
   });
 
-  return articlesWithTimestamps.reduce(
+  const reduced = articlesWithTimestamps.reduce(
     (grouped: { [key: number]: any[] }, article: { t: number }) => {
       (grouped[article.t] = grouped[article.t] || []).push(article);
       return grouped;
     },
     {},
   );
+
+  delete reduced[0];
+
+  return reduced;
 };
 
 const getExternalStockData = async ({ ticker, from, to }: StockDataParams) => {
@@ -144,6 +148,7 @@ exports.getNewsData = onCall(
     cors: [
       "https://finvis-8304.web.app",
       "http://127.0.0.1:5002",
+      "http://localhost:5002",
       "http://localhost:3000",
     ],
     region: "europe-west2",
@@ -183,6 +188,7 @@ exports.getStockData = onCall(
     cors: [
       "https://finvis-8304.web.app",
       "http://127.0.0.1:5002",
+      "http://localhost:5002",
       "http://localhost:3000",
     ],
     region: "europe-west2",
