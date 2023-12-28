@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import LineChart from "../components/linechart.jsx";
 import Article from "../components/article.jsx";
-import { SyncLoader } from "react-spinners";
 import { getStockData, getNewsData } from "../firebase.js";
 import { UserContext } from "../contexts/user";
 
@@ -20,8 +19,17 @@ const DashBoard = () => {
 
   const [query, setQuery] = useState("Apple");
   const [ticker, setTicker] = useState("AAPL");
-  const [from, setFrom] = useState("2023-11-12");
-  const [to, setTo] = useState("2023-12-12");
+
+  // // today = YYYY-MM-DD
+  // const today = new Date().toISOString().slice(0, 10);
+  // // lastMonth = YYYY-MM-DD
+  // const lastMonth = new Date();
+
+  // const [from, setFrom] = useState("2023-11-12");
+  // const [to, setTo] = useState("2023-12-12");
+
+  const to = new Date().toISOString().slice(0, 10);
+  const from = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().slice(0, 10);
 
   const [stockData, setStockData] = useState([]);
   const [newsData, setNewsData] = useState([]);
@@ -108,7 +116,7 @@ const DashBoard = () => {
       <div class="flex flex-col justify-center w-full lg:flex-row">
         <div class="card w-fit bg-base-200 shadow-xl">
           <div class="card-body">
-            <h2 class="card-title">Apple</h2>
+            <h2 class="card-title">{query}</h2>
             <LineChart
               stockData={stockData}
               newsData={newsData}
