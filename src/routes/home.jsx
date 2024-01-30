@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { UserContext } from "../contexts/user";
 
 const Home = () => {
-  const { user, isLoading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div className="flex h-full justify-center items-center flex-grow">

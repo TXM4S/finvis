@@ -20,14 +20,6 @@ const DashBoard = () => {
   const [query, setQuery] = useState("Apple");
   const [ticker, setTicker] = useState("AAPL");
 
-  // // today = YYYY-MM-DD
-  // const today = new Date().toISOString().slice(0, 10);
-  // // lastMonth = YYYY-MM-DD
-  // const lastMonth = new Date();
-
-  // const [from, setFrom] = useState("2023-11-12");
-  // const [to, setTo] = useState("2023-12-12");
-
   const to = new Date().toISOString().slice(0, 10);
   const from = new Date(new Date().setDate(new Date().getDate() - 30)).toISOString().slice(0, 10);
 
