@@ -4,12 +4,22 @@ import Article from "../components/article.jsx";
 import SearchBar from "../components/searchbar.jsx";
 import { getStockData, getNewsData } from "../firebase.js";
 import { UserContext } from "../contexts/user";
+import { useWindowDimensions } from "../utils/windowhandler.js";
 
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DashBoard = () => {
   const { user, isLoading } = useContext(UserContext);
+  const { width } = useWindowDimensions();
+  // 40 + 256 + 80 + chartWidth + 80 + 256 + 40
+  // ml-10 + w-64 + divider + chartWidth + divider + w-64 + mr-10
+  // bad pratice hardcoding values but cant dynamically get tailwindcss values
+  const chartWidth = width - 752;
+  const chartHeight = 384;
+
+  console.log(chartWidth, chartHeight, width);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -92,8 +102,8 @@ const DashBoard = () => {
             <LineChart
               stockData={stockData}
               newsData={newsData}
-              width={700}
-              height={400}
+              width={chartWidth}
+              height={chartHeight}
               handleSetArticles={handleSetArticles}
             />
           </div>
