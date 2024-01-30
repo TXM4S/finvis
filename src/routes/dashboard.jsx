@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import LineChart from "../components/linechart.jsx";
 import Article from "../components/article.jsx";
+import SearchBar from "../components/searchbar.jsx"
 import { getStockData, getNewsData } from "../firebase.js";
 import { UserContext } from "../contexts/user";
 
@@ -79,32 +80,8 @@ const DashBoard = () => {
     <></>
   ) : (
     <div className="flex flex-col space-y-10 items-center">
-      <h1 className="text-5xl font-black self-start"> DASHBOARD </h1>
-      <div className="card w-full bg-base-200 shadow-xl">
-        <div className="card-body flex-row ml-10 mr-10 justify-between">
-          <label className="form-control w-64">
-            <div className="label">
-              <span className="label-text">Query:</span>
-            </div>
-            <input
-              type="text"
-              id="queryInput"
-              placeholder="Apple"
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
-          <label class="form-control w-full max-w-xs">
-            <div class="label">
-              <span class="label-text">Ticker:</span>
-            </div>
-            <select class="select select-bordered" id="tickerSelect">
-              <option selected>AAPL</option>
-              <option>TSLA</option>
-            </select>
-          </label>
-          <button className="btn self-end btn-primary" onClick={handleSearch}>Search</button>
-        </div>
-      </div>
+      <h1 className="ml-10 text-5xl font-black self-start"> DASHBOARD </h1>
+      <SearchBar handleSearch={handleSearch} />
       <div class="flex flex-col justify-center w-full lg:flex-row">
         <div class="card w-fit bg-base-200 shadow-xl">
           <div class="card-body">
