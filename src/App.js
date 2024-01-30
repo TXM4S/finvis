@@ -24,7 +24,7 @@ function App() {
     <UserContext.Provider value={{ user, isLoading }}>
       <div className="App flex flex-col">
         <NavBar />
-        <div className="flex justify-center items-center flex-grow">
+        <div className="flex w-fit justify-center items-center flex-grow">
           <Outlet />
         </div>
       </div>

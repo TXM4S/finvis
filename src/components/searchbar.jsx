@@ -3,9 +3,9 @@ const SearchBar = (props) => {
 
   const handleSearch = props.handleSearch
   return (
-    <div className="card w-full bg-base-200 shadow-xl">
-      <div className="card-body flex-row ml-10 mr-10 justify-between">
-        <label className="form-control w-64">
+    <div className="card w-fit bg-base-200 shadow-xl">
+      <div className="card-body flex-col justify-normal">
+        <label className="form-control w-48">
           <div className="label">
             <span className="label-text">Query:</span>
           </div>
@@ -25,7 +25,7 @@ const SearchBar = (props) => {
             <option>TSLA</option>
           </select>
         </label>
-        <button className="btn self-end btn-primary" onClick={handleSearch}>Search</button>
+        <button className="btn btn-primary mt-auto" onClick={handleSearch}>Search</button>
       </div>
     </div>
   )

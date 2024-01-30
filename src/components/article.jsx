@@ -5,7 +5,7 @@ const Article = (props) => {
   const stringDate = new Date(date).toLocaleDateString();
 
   return (
-    <div className="card w-96 mb-5 bg-base-200 shadow-xl">
+    <div className="card w-64 mb-5 bg-base-200 shadow-xl">
       <div className="card-body">
         <h2 class="card-title">{title}</h2>
         <p>{author}</p>

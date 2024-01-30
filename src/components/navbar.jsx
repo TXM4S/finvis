@@ -4,7 +4,7 @@ import { signInWithGoogle, signOut } from "../firebase";
 import { Link } from "react-router-dom";
 
 const NavBar = () => {
-  const { user, isLoading } = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   return (
     <div className="navbar rounded bg-base-100">
