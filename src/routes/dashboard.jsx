@@ -97,7 +97,16 @@ const DashBoard = () => {
     <></>
   ) : (
     <div className="flex flex-col space-y-10 items-center">
-      <h1 className="ml-10 text-5xl font-black self-start"> DASHBOARD </h1>
+      <div className="flex flex-row w-full">
+        <h1 className="ml-10 text-5xl font-black self-start"> DASHBOARD </h1>
+        <button
+          className="btn btn-primary ml-auto self-end"
+          onClick={handleSave}
+        >
+          {" "}
+          Save{" "}
+        </button>
+      </div>
       <div class="flex ml-10 flex-row justify-center">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
@@ -115,10 +124,10 @@ const DashBoard = () => {
         </div>
         <div className="divider lg:divider-horizontal"></div>
         {articleElements.length === 0 ? (
-          <div className="w-64 h-96"></div>
+          <div className="w-64 h-[475px]"></div>
         ) : (
           <>
-            <div className="overflow-y-scroll no-scrollbar w-64 h-[500px]">
+            <div className="overflow-y-scroll no-scrollbar w-64 h-[475px]">
               {articleElements}
             </div>
           </>
