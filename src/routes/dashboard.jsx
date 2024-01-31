@@ -3,7 +3,7 @@ import Article from "../components/article.jsx";
 import LineChart from "../components/linechart.jsx";
 import SearchBar from "../components/searchbar.jsx";
 import { UserContext } from "../contexts/user";
-import { getNewsData, getStockData, getUID, setUserData } from "../firebase.js";
+import { getNewsData, getStockData, getUID, addSnapshot } from "../firebase.js";
 import { useWindowDimensions } from "../utils/windowhandler.js";
 
 import { useContext } from "react";
@@ -78,7 +78,9 @@ const DashBoard = () => {
 
   const handleSave = () => {
     const uid = getUID();
-    setUserData({ uid, stockData, newsData });
+    const name = { ticker } + "&&" + { query };
+    const dateRange = { from } + "to" + { to };
+    addSnapshot({ uid, name, dateRange, stockData, newsData });
   };
 
   const handleSearch = () => {
@@ -112,7 +114,9 @@ const DashBoard = () => {
         <div className="divider lg:divider-horizontal"></div>
         <div class="card bg-base-200 shadow-xl">
           <div class="card-body">
-            <h2 class="card-title">{query}</h2>
+            <h2 class="card-title">
+              {ticker} && {query}
+            </h2>
             <LineChart
               stockData={stockData}
               newsData={newsData}
@@ -124,10 +128,10 @@ const DashBoard = () => {
         </div>
         <div className="divider lg:divider-horizontal"></div>
         {articleElements.length === 0 ? (
-          <div className="w-64 h-[475px]"></div>
+          <div className="w-64 h-100"></div>
         ) : (
           <>
-            <div className="overflow-y-scroll no-scrollbar w-64 h-[475px]">
+            <div className="overflow-y-scroll no-scrollbar w-64 h-100">
               {articleElements}
             </div>
           </>

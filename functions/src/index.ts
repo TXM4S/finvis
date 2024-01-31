@@ -5,4 +5,4 @@ exports.getStockData = getStockData.getStockData;
 const getNewsData = require("./newsdata");
 exports.getNewsData = getNewsData.getNewsData;
 
-exports.userdata = require("./userdata");
+exports.snapshots = require("./snapshots");

@@ -6,6 +6,7 @@ import "./index.css";
 import App from "./App";
 import Home from "./routes/home";
 import DashBoard from "./routes/dashboard";
+import SnapShots from "./routes/snapshots";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "dashboard",
         element: <DashBoard />,
+      },
+      {
+        path: "snapshots",
+        element: <SnapShots />,
       },
     ],
   },

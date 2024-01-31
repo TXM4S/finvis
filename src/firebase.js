@@ -1,5 +1,4 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
 
 import { getFunctions, httpsCallable } from "firebase/functions";
 import {
@@ -23,8 +22,9 @@ const app = initializeApp(firebaseConfig);
 const functions = getFunctions(app, "europe-west2");
 const getStockData = httpsCallable(functions, "getStockData");
 const getNewsData = httpsCallable(functions, "getNewsData");
-const getUserData = httpsCallable(functions, "userdata-get");
-const setUserData = httpsCallable(functions, "userdata-post");
+const getSnapshot = httpsCallable(functions, "snapshots-get");
+const addSnapshot = httpsCallable(functions, "snapshots-add");
+const listSnapshots = httpsCallable(functions, "snapshots-list");
 
 const auth = getAuth();
 
@@ -58,7 +58,8 @@ export {
   getNewsData,
   signInWithGoogle,
   signOut,
-  getUserData,
-  setUserData,
+  getSnapshot,
+  addSnapshot,
+  listSnapshots,
   getUID,
 };

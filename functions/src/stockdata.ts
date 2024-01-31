@@ -1,10 +1,5 @@
 import { onCall } from "firebase-functions/v2/https";
-
-interface StockDataParams {
-  ticker: string;
-  from: string;
-  to: string;
-}
+import { StockDataParams } from "./interfaces";
 
 const isStockDataParams = (data: any) => {
   return (

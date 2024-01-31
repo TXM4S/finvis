@@ -1,23 +1,7 @@
 import { onCall } from "firebase-functions/v2/https";
+import { Article, NewsDataParams } from "./interfaces";
 
-interface NewsDataParams {
-  query: string;
-  from: string;
-  to: string;
-}
-
-interface Article {
-  title: string;
-  author: string;
-  source: {
-    id: string;
-    name: string;
-  };
-  publishedAt: string;
-  url: string;
-}
-
-const isNewsDataParams = (data: any) => {
+const isNewsDataParams = (data: NewsDataParams) => {
   return (
     typeof data.query == "string" &&
     typeof data.from == "string" &&
