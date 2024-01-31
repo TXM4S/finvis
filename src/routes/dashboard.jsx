@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Article from "../components/article.jsx";
-import LineChart from "../components/linechart.jsx";
-import SearchBar from "../components/searchbar.jsx";
-import { UserContext } from "../contexts/user";
-import { getNewsData, getStockData, getUID, addSnapshot } from "../firebase.js";
-import { useWindowDimensions } from "../utils/windowhandler.js";
-
-import { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/searchbar.jsx";
+import ChartAndArticles from "../components/chartandarticles.jsx";
+import { UserContext } from "../contexts/user";
+import { addSnapshot, getNewsData, getStockData, getUID } from "../firebase.js";
 
 const DashBoard = () => {
   const { user, isLoading } = useContext(UserContext);
-  const { width } = useWindowDimensions();
-  // 40 + 256 + 80 + chartWidth + 80 + 256 + 40
-  // ml-10 + w-64 + divider + chartWidth + divider + w-64 + mr-10
-  // bad pratice hardcoding values but cant dynamically get tailwindcss values
-  const chartWidth = width - 752;
-  const chartHeight = 384;
-
-  console.log(chartWidth, chartHeight, width);
 
   const navigate = useNavigate();
 
@@ -38,7 +26,6 @@ const DashBoard = () => {
 
   const [stockData, setStockData] = useState([]);
   const [newsData, setNewsData] = useState([]);
-  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     if (!isLoading && user) {
@@ -63,23 +50,10 @@ const DashBoard = () => {
     }
   }, [user, isLoading, query, from, to, ticker]);
 
-  let articleElements = [];
-
-  articles.forEach((article) => {
-    articleElements.push(
-      <Article
-        title={article.title}
-        author={article.author}
-        date={article.publishedAt}
-        url={article.url}
-      />,
-    );
-  });
-
   const handleSave = () => {
     const uid = getUID();
-    const name = { ticker } + "&&" + { query };
-    const dateRange = { from } + "to" + { to };
+    const name = ticker + " && " + query;
+    const dateRange = from + " to " + to;
     addSnapshot({ uid, name, dateRange, stockData, newsData });
   };
 
@@ -89,10 +63,6 @@ const DashBoard = () => {
     setQuery(queryInput);
     setTicker(tickerSelect);
     // Trigger data fetch here
-  };
-
-  const handleSetArticles = (articles) => {
-    setArticles(articles);
   };
 
   return isLoading ? (
@@ -112,30 +82,11 @@ const DashBoard = () => {
       <div class="flex ml-10 flex-row justify-center">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
-        <div class="card bg-base-200 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title">
-              {ticker} && {query}
-            </h2>
-            <LineChart
-              stockData={stockData}
-              newsData={newsData}
-              width={chartWidth}
-              height={chartHeight}
-              handleSetArticles={handleSetArticles}
-            />
-          </div>
-        </div>
-        <div className="divider lg:divider-horizontal"></div>
-        {articleElements.length === 0 ? (
-          <div className="w-64 h-100"></div>
-        ) : (
-          <>
-            <div className="overflow-y-scroll no-scrollbar w-64 h-100">
-              {articleElements}
-            </div>
-          </>
-        )}
+        <ChartAndArticles
+          name={ticker + "&&" + query}
+          stockData={stockData}
+          newsData={newsData}
+        />
       </div>
     </div>
   );
