@@ -6,7 +6,7 @@ const Home = () => {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="flex h-full justify-center items-center flex-grow">
+    <div className="flex h-full justify-center w-screen items-center flex-grow">
       <div className="flex flex-col mb-36 text-center w-fit">
         <p className="text-5xl font-black">
           VISUALISE DATA{" "}
