@@ -1,6 +1,6 @@
 import { onCall } from "firebase-functions/v2/https";
-import { initializeApp } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
+import { initializeApp } from "firebase-admin/app";
 
 initializeApp();
 
@@ -17,26 +17,6 @@ const correctPostParams = (data: any) => {
 const correctGetParams = (data: any) => {
   return typeof data.uid == "string";
 };
-
-exports.post = onCall(
-  {
-    cors: [
-      "https://finvis-8304.web.app",
-      "http://127.0.0.1:5002",
-      "http://localhost:5002",
-      "http://localhost:3000",
-    ],
-    region: "europe-west2",
-  },
-  async (request) => {
-    if (!correctPostParams(request.data)) {
-      throw new Error("Invalid request");
-    }
-    const { uid, stockData, newsData } = request.data;
-
-    db.collection("historicalData").add({ uid, stockData, newsData });
-  },
-);
 
 exports.get = onCall(
   {
@@ -55,13 +35,35 @@ exports.get = onCall(
 
     const { uid } = request.data;
 
-    // return all docs from historicalData where uid == uid
-    //
-
     const docRef = db.collection("historicalData").where("uid", "==", uid);
-
     const docSnap = await docRef.get();
 
-    return docSnap;
+    if (docSnap.empty) {
+      return null;
+    }
+
+    const docs = docSnap.docs.map((doc) => doc.data());
+
+    return docs;
+  },
+);
+
+exports.post = onCall(
+  {
+    cors: [
+      "https://finvis-8304.web.app",
+      "http://127.0.0.1:5002",
+      "http://localhost:5002",
+      "http://localhost:3000",
+    ],
+    region: "europe-west2",
+  },
+  async (request) => {
+    if (!correctPostParams(request.data)) {
+      throw new Error("Invalid request");
+    }
+    const { uid, stockData, newsData } = request.data;
+
+    db.collection("historicalData").add({ uid, stockData, newsData });
   },
 );
