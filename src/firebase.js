@@ -1,11 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
-import {
-  getFunctions,
-  connectFunctionsEmulator,
-  httpsCallable,
-} from "firebase/functions";
+import { getFunctions, httpsCallable } from "firebase/functions";
 import {
   getAuth,
   GoogleAuthProvider,
@@ -24,10 +20,11 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 const functions = getFunctions(app, "europe-west2");
 const getStockData = httpsCallable(functions, "getStockData");
 const getNewsData = httpsCallable(functions, "getNewsData");
+const getUserData = httpsCallable(functions, "userdata-get");
+const setUserData = httpsCallable(functions, "userdata-post");
 
 const auth = getAuth();
 
@@ -52,4 +49,16 @@ const signOut = () => {
   auth.signOut();
 };
 
-export { getStockData, getNewsData, signInWithGoogle, signOut };
+const getUID = () => {
+  return auth.currentUser.uid;
+};
+
+export {
+  getStockData,
+  getNewsData,
+  signInWithGoogle,
+  signOut,
+  getUserData,
+  setUserData,
+  getUID,
+};

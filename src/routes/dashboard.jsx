@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import LineChart from "../components/linechart.jsx";
+import React, { useEffect, useState } from "react";
 import Article from "../components/article.jsx";
+import LineChart from "../components/linechart.jsx";
 import SearchBar from "../components/searchbar.jsx";
-import { getStockData, getNewsData } from "../firebase.js";
 import { UserContext } from "../contexts/user";
+import { getNewsData, getStockData, getUID, setUserData } from "../firebase.js";
 import { useWindowDimensions } from "../utils/windowhandler.js";
 
 import { useContext } from "react";
@@ -75,6 +75,11 @@ const DashBoard = () => {
       />,
     );
   });
+
+  const handleSave = () => {
+    const uid = getUID();
+    setUserData({ uid, stockData, newsData });
+  };
 
   const handleSearch = () => {
     const queryInput = document.getElementById("queryInput").value || "Apple";
