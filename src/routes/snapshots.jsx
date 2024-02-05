@@ -44,7 +44,7 @@ const Snapshots = () => {
         <MenuItem
           name={item.name}
           dateRange={item.dateRange}
-          handleClick={(el) => handleMenuClick(item.id)}
+          handleClick={() => handleMenuClick(item.id)}
         />
       );
     })
