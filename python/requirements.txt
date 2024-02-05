@@ -1,3 +1,0 @@
-firebase-functions
-firebase-admin
-vaderSentiment==3.3.2
