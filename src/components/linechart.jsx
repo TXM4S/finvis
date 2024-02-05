@@ -78,6 +78,15 @@ const LineChart = (props) => {
       const stock = stockData.find((d) => {
         return d.t == article;
       });
+
+      const articleObj = newsData[article];
+      const averageSentiment =
+        articleObj.reduce((acc, curr) => {
+          return acc + (curr.s ? curr.s : 0);
+        }, 0) / articleObj.length;
+
+      console.log(averageSentiment);
+
       const cy = stock.c != null ? y(stock.c) : y(stock.ec);
       const radius = (newsData[article].length / maxLength) * 10;
       const date = new Date(parseInt(article)).toLocaleDateString();
@@ -89,7 +98,7 @@ const LineChart = (props) => {
           cx={x(article)}
           cy={cy}
           r={radius}
-          fill="oklch(var(--p))"
+          fill={colorScale(averageSentiment)}
           onMouseDown={(e) => {
             console.log(newsData[article]);
             handleSetArticles(newsData[article]);

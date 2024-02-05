@@ -25,6 +25,7 @@ const ChartAndArticles = (props) => {
         author={article.author}
         date={article.publishedAt}
         url={article.url}
+        sentiment={article.s}
       />,
     );
   });

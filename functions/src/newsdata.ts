@@ -1,5 +1,6 @@
 import { onCall } from "firebase-functions/v2/https";
 import { Article, NewsDataParams } from "./interfaces";
+import * as vader from "vader-sentiment";
 
 const isNewsDataParams = (data: NewsDataParams) => {
   return (
@@ -16,8 +17,18 @@ export const mutateNewsData = (articles: Article[]) => {
     return { ...article, t: articleDate.getTime() };
   });
 
-  const reduced = articlesWithTimestamps.reduce(
-    (grouped: { [key: number]: any[] }, article: { t: number }) => {
+  const articlesWithSentiments = articlesWithTimestamps.map(
+    (article: Article & { t: number }) => {
+      const sentiment = getSentiment(article.title);
+      return { ...article, s: sentiment };
+    },
+  );
+
+  const reduced = articlesWithSentiments.reduce(
+    (
+      grouped: { [key: number]: (Article & { t: number; s: number })[] },
+      article: Article & { t: number; s: number },
+    ) => {
       (grouped[article.t] = grouped[article.t] || []).push(article);
       return grouped;
     },
@@ -49,6 +60,11 @@ const getExternalNewsData = async ({ query, from, to }: NewsDataParams) => {
     console.error("There was a problem with the fetch operation: ", error);
     throw error;
   }
+};
+
+const getSentiment = (text: string) => {
+  const intensity = vader.SentimentIntensityAnalyzer.polarity_scores(text);
+  return intensity.compound;
 };
 
 exports.getNewsData = onCall(
