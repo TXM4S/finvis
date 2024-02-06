@@ -119,11 +119,6 @@ const LineChart = (props) => {
             <stop offset="0%" stopColor="oklch(var(--p))" stopOpacity={0.8} />
             <stop offset="100%" stopColor="oklch(var(--p))" stopOpacity={0} />
           </linearGradient>
-          <linearGradient id="legendGradient" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="oklch(var(--a))" />
-            <stop offset="50%" stopColor="oklch(var(--p))" />
-            <stop offset="100%" stopColor="oklch(var(--s))" />
-          </linearGradient>
         </defs>
         <g fill="none">
           <path
@@ -136,19 +131,6 @@ const LineChart = (props) => {
           <g ref={(node) => d3.select(node).call(yAxis)} />
           {getGlyphs()}
         </g>
-        <rect
-          x={20}
-          y={height - 50}
-          width={100}
-          height={10}
-          fill="url(#legendGradient)"
-        />
-        <text x={20} y={height - 35} fontSize={10} fill={"white"}>
-          -1
-        </text>
-        <text x={120} y={height - 35} fontSize={10} fill={"white"}>
-          1
-        </text>
       </svg>
     </div>
   );

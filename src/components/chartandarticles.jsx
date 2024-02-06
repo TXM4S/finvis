@@ -1,5 +1,6 @@
 import LineChart from "./linechart";
 import Article from "./article";
+import GradientLegend from "./gradientlegend";
 import { useState } from "react";
 import { useWindowDimensions } from "../utils/windowhandler";
 
@@ -33,7 +34,7 @@ const ChartAndArticles = (props) => {
   return (
     <>
       <div class="card bg-base-200 shadow-xl">
-        <div class="card-body">
+        <div class="card-body flex flex-col items-center">
           <h2 class="card-title">{title}</h2>
           <LineChart
             stockData={stockData}
@@ -42,6 +43,7 @@ const ChartAndArticles = (props) => {
             height={chartHeight}
             handleSetArticles={handleSetArticles}
           />
+          <GradientLegend width={chartWidth / 2} height={30} />
         </div>
       </div>
       <div className="divider lg:divider-horizontal"></div>
