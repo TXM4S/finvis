@@ -10,7 +10,7 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA6XmIW7y0wfMxOoa9GFle-m99h8LM57VQ",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: "finvis-8304.firebaseapp.com",
   projectId: "finvis-8304",
   storageBucket: "finvis-8304.appspot.com",

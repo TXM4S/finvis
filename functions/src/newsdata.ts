@@ -12,7 +12,7 @@ const isNewsDataParams = (data: NewsDataParams) => {
 
 export const mutateNewsData = (articles: Article[]) => {
   const articlesWithTimestamps = articles.map((article: Article) => {
-    const articleDate = new Date(article.publishedAt);
+    const articleDate = new Date(article.published_date);
     articleDate.setHours(0, 0, 0, 0);
     return { ...article, t: articleDate.getTime() };
   });
@@ -40,17 +40,28 @@ export const mutateNewsData = (articles: Article[]) => {
   return reduced;
 };
 
-const getExternalNewsData = async ({ query, from, to }: NewsDataParams) => {
+const getExternalNewsData = async ({
+  query,
+  from,
+  to,
+  key,
+}: NewsDataParams) => {
   const url =
-    "https://newsapi.org/v2/everything?q=" +
+    "https://api.newscatcherapi.com/v2/search?q=" +
     query +
     "&from=" +
     from +
     "&to=" +
     to +
-    "&sortBy=popularity&apiKey=28741d24c78d4657b5de4ae5aa2080f1";
+    "&lang=en&page_size=100&sort_by=rank";
+  const options = {
+    method: "GET",
+    headers: {
+      "x-api-key": key,
+    },
+  };
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, options);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -76,17 +87,22 @@ exports.getNewsData = onCall(
       "http://localhost:3000",
     ],
     region: "europe-west2",
+    secrets: ["NEWS_API_KEY"],
   },
   async (request) => {
     if (!isNewsDataParams(request.data)) {
       throw new Error("Invalid request");
     }
 
+    if (!process.env.NEWS_API_KEY) throw new Error("No news api key");
+
+    const key: string = process.env.NEWS_API_KEY;
+
     const [query, from, to] = [
       request.data.query,
       request.data.from,
       request.data.to,
     ];
-    return await getExternalNewsData({ query, from, to });
+    return await getExternalNewsData({ query, from, to, key });
   },
 );

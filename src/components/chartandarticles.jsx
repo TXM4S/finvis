@@ -24,8 +24,8 @@ const ChartAndArticles = (props) => {
       <Article
         title={article.title}
         author={article.author}
-        date={article.publishedAt}
-        url={article.url}
+        date={article.published_date}
+        url={article.link}
         sentiment={article.s}
       />,
     );
@@ -51,7 +51,7 @@ const ChartAndArticles = (props) => {
         <div className="w-64 h-100"></div>
       ) : (
         <>
-          <div className="overflow-y-scroll no-scrollbar w-64 h-100">
+          <div className="overflow-y-scroll no-scrollbar w-64 h-100 mr-10">
             {articleElements}
           </div>
         </>

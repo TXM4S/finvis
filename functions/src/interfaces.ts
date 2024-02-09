@@ -2,6 +2,7 @@ export interface NewsDataParams {
   query: string;
   from: string;
   to: string;
+  key: string;
 }
 
 export interface Article {
@@ -11,8 +12,8 @@ export interface Article {
     id: string;
     name: string;
   };
-  publishedAt: string;
-  url: string;
+  published_date: string;
+  link: string;
 }
 
 export interface StockDataParams {

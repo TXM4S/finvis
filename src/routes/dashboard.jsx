@@ -7,7 +7,6 @@ import { addSnapshot, getNewsData, getStockData, getUID } from "../firebase.js";
 
 const DashBoard = () => {
   const { user, isLoading } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,9 +17,10 @@ const DashBoard = () => {
 
   const [query, setQuery] = useState("Apple");
   const [ticker, setTicker] = useState("AAPL");
+  const [newsLoading, setNewsLoading] = useState(true);
 
   const to = new Date().toISOString().slice(0, 10);
-  const from = new Date(new Date().setDate(new Date().getDate() - 30))
+  const from = new Date(new Date().setDate(new Date().getDate() - 60))
     .toISOString()
     .slice(0, 10);
 
@@ -39,6 +39,7 @@ const DashBoard = () => {
         setStockData(result.data);
         // ...
       });
+      setNewsLoading(true);
       getNewsData({
         query: query,
         from: from,
@@ -46,6 +47,7 @@ const DashBoard = () => {
       }).then((result) => {
         console.log(result);
         setNewsData(result.data);
+        setNewsLoading(false);
       });
     }
   }, [user, isLoading, query, from, to, ticker]);
@@ -69,24 +71,30 @@ const DashBoard = () => {
     <></>
   ) : (
     <div className="flex flex-col space-y-10 items-center">
-      <div className="flex flex-row w-full">
+      <div className="flex flex-row w-screen">
         <h1 className="ml-10 text-5xl font-black self-start"> DASHBOARD </h1>
         <button
-          className="btn btn-primary ml-auto self-end"
+          className="btn btn-primary ml-auto self-end mr-10"
           onClick={handleSave}
         >
           {" "}
           Save{" "}
         </button>
       </div>
-      <div class="flex ml-10 flex-row justify-center">
+      <div class="flex ml-10 flex-row justify-center h-100">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
-        <ChartAndArticles
-          name={ticker + "&&" + query}
-          stockData={stockData}
-          newsData={newsData}
-        />
+        {newsLoading ? (
+          <div className="flex-grow justify-center ml-10 self-center">
+            <span className="loading loading-dots loading-lg"></span>
+          </div>
+        ) : (
+          <ChartAndArticles
+            name={ticker + "&&" + query}
+            stockData={stockData}
+            newsData={newsData}
+          />
+        )}
       </div>
     </div>
   );

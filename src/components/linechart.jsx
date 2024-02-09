@@ -18,6 +18,17 @@ const LineChart = (props) => {
     .domain(d3.extent(stockData, (d) => d.t))
     .range([margin.left, width - margin.right]);
 
+  const startDate = x.domain()[0];
+  const nextDay = new Date(startDate);
+  nextDay.setUTCDate(startDate.getUTCDate() + 1);
+
+  const oneDayWidth = x(nextDay) - x(startDate);
+
+  d3.select("#xAxis")
+    .transition()
+    .duration(1000)
+    .call(d3.axisBottom(x).ticks(width / 80));
+
   const y = d3
     .scaleLinear()
     .domain([d3.min(stockData, (d) => d.c) - 20, d3.max(stockData, (d) => d.c)])
@@ -72,7 +83,7 @@ const LineChart = (props) => {
           .attr("font-weight", "bold"),
       );
 
-  const getGlyphs = () => {
+  const getGlyphs = (xStart, xEnd) => {
     if (!newsData) return null;
 
     console.log(colorScale(0.5));
@@ -82,6 +93,11 @@ const LineChart = (props) => {
       ...Object.values(newsData).map((articles) => articles.length),
     );
     for (const article in newsData) {
+      // Convert article to a number for comparison
+      const articleNum = parseInt(article);
+      // Check if article is within the x-range
+      if (articleNum < xStart || articleNum > xEnd) continue;
+
       const stock = stockData.find((d) => {
         return d.t == article;
       });
@@ -95,8 +111,8 @@ const LineChart = (props) => {
       console.log(averageSentiment);
 
       const cy = stock.c != null ? y(stock.c) : y(stock.ec);
-      const radius = (newsData[article].length / maxLength) * 10;
-      const date = new Date(parseInt(article)).toLocaleDateString();
+      const radius = (newsData[article].length / maxLength) * oneDayWidth * 0.5;
+      const date = new Date(articleNum).toLocaleDateString();
       const tooltipText = `${date} ${newsData[article].length} articles`;
       glyphs.push(
         <circle
@@ -119,7 +135,7 @@ const LineChart = (props) => {
 
   const updateChart = (event) => {
     const extent = event.selection;
-  
+
     if (!extent) {
       if (!idleTimeout) return (idleTimeout = setTimeout(idled, 350));
       x.domain(d3.extent(stockData, (d) => d.t));
@@ -127,28 +143,33 @@ const LineChart = (props) => {
       x.domain([x.invert(extent[0]), x.invert(extent[1])]);
       d3.select(".brush").call(brush.move, null);
     }
-  
+
     // Update the line and area paths with the new x-domain
     d3.select("#line").attr("d", line(stockData));
-    d3.select("#gradient").attr("d", area(stockData));
-  
-    // Update the glyphs with the new x-domain
-    d3.selectAll(".glyphs")
-    .attr("cx", function(d, i) {
-      // Find the corresponding data point in stockData
-      const stock = stockData.find((d) => d.t == d3.select(this).attr("key"));
-  
-      // If the data point exists, return the new cx value
-      if (stock) {
-        return x(stock.t);
-      }
-  
-      // If the data point doesn't exist, return the current cx value
-      return d3.select(this).attr("cx");
+    d3.select("#area").attr("d", area(stockData));
+
+    // Remove old glyphs
+    d3.selectAll(".glyphs").remove();
+
+    const xStart = x.domain()[0].getTime();
+    const xEnd = x.domain()[1].getTime();
+    const newGlyphs = getGlyphs(xStart, xEnd);
+
+    const lineholder = d3.select("#lineholder");
+    newGlyphs.forEach((glyph) => {
+      lineholder
+        .append("circle")
+        .attr("class", "glyphs stroke-base-200")
+        .attr("cx", glyph.props.cx)
+        .attr("cy", glyph.props.cy)
+        .attr("r", glyph.props.r)
+        .attr("fill", glyph.props.fill)
+        .on("mousedown", glyph.props.onMouseDown)
+        .attr("cursor", "pointer");
     });
-  
+
     // Update the x-axis with the new domain
-    d3.select(".xAxis")
+    d3.select("#xAxis")
       .transition()
       .duration(1000)
       .call(d3.axisBottom(x).ticks(width / 80));
@@ -182,11 +203,14 @@ const LineChart = (props) => {
             strokeWidth="3"
             d={line(stockData)}
           />
-          <path fill="url(#gradient)" d={area(stockData)} />
-          <g ref={(node) => d3.select(node).call(xAxis)} />
+          <path id="area" fill="url(#gradient)" d={area(stockData)} />
+          <g
+            id="xAxis"
+            transform={"translate(0," + (height - margin.bottom) + ")"}
+          />
           <g ref={(node) => d3.select(node).call(yAxis)} />
           <g ref={(node) => d3.select(node).call(brush)} className="brush"></g>
-          {getGlyphs()}
+          {getGlyphs(x.domain()[0].getTime(), x.domain()[1].getTime())}
         </g>
       </svg>
     </div>
