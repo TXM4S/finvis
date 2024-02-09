@@ -32,4 +32,4 @@ firebase emulators:start
 - [DaisyUI](https://daisyui.com/)
 - [D3.js](https://d3js.org/)
 - [Polygon.io](https://polygon.io/)
-- [NewsCatcher](https://newscatcherapi.com/) (Hopefully)
+- [NewsCatcher](https://newscatcherapi.com/)
