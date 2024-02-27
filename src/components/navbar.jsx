@@ -57,18 +57,18 @@ const NavBar = () => {
       </div>
       <div className="navbar-end">
         {user ? (
-          <div class="dropdown dropdown-end">
+          <div className="dropdown dropdown-end">
             <div
-              tabindex="0"
+              tabIndex="0"
               role="button"
-              class="btn btn-ghost btn-circle avatar"
+              className="btn btn-ghost btn-circle avatar"
             >
-              <div class="w-10 rounded-full">
+              <div className="w-10 rounded-full">
                 <img alt="Tailwind CSS Navbar component" src={user.photoURL} />
               </div>
             </div>
             <ul
-              tabindex="0"
+              tabIndex="0"
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-200 rounded-box w-52"
             >
               <li>

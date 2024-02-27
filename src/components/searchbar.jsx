@@ -1,7 +1,5 @@
-
 const SearchBar = (props) => {
-
-  const handleSearch = props.handleSearch
+  const handleSearch = props.handleSearch;
   return (
     <div className="card w-fit bg-base-200 shadow-xl">
       <div className="card-body flex-col justify-normal">
@@ -16,19 +14,40 @@ const SearchBar = (props) => {
             className="input input-bordered w-full max-w-xs"
           />
         </label>
-        <label class="form-control w-full max-w-xs">
-          <div class="label">
-            <span class="label-text">Ticker:</span>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text">Ticker:</span>
           </div>
-          <select class="select select-bordered" id="tickerSelect">
-            <option selected>AAPL</option>
+          <select
+            defaultValue={"AAPL"}
+            className="select select-bordered"
+            id="tickerSelect"
+          >
+            <option>AAPL</option>
             <option>TSLA</option>
           </select>
         </label>
-        <button className="btn btn-primary mt-auto" onClick={handleSearch}>Search</button>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text">Date Range:</span>
+          </div>
+          <select
+            defaultValue={12}
+            className="select select-bordered"
+            id="dateRangeSelect"
+          >
+            <option value={1}>1 Month</option>
+            <option value={3}>3 Months</option>
+            <option value={6}>6 Months</option>
+            <option value={12}>1 Year</option>
+          </select>
+        </label>
+        <button className="btn btn-primary mt-auto" onClick={handleSearch}>
+          Search
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default SearchBar;

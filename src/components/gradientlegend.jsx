@@ -1,11 +1,19 @@
+import * as d3 from "d3";
+
 const GradientLegend = ({ width, height }) => {
+  const colorScale = d3.scaleSequential(d3.interpolateRdYlGn).domain([-1, 1]);
+
+  const colorStart = colorScale(-1);
+  const colorMid = colorScale(0);
+  const colorEnd = colorScale(1);
+
   return (
     <svg width={width} height={height}>
       <defs>
         <linearGradient id="legendGradient" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="oklch(var(--a))" />
-          <stop offset="50%" stopColor="oklch(var(--p))" />
-          <stop offset="100%" stopColor="oklch(var(--s))" />
+          <stop offset="0%" stopColor={colorStart} />
+          <stop offset="50%" stopColor={colorMid} />
+          <stop offset="100%" stopColor={colorEnd} />
         </linearGradient>
       </defs>
       <rect

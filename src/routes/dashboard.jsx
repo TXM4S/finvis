@@ -18,12 +18,17 @@ const DashBoard = () => {
   const [query, setQuery] = useState("Apple");
   const [ticker, setTicker] = useState("AAPL");
   const [newsLoading, setNewsLoading] = useState(true);
+  const [daterange, setDaterange] = useState(12);
 
   const to = new Date().toISOString().slice(0, 10);
-  const from = new Date(new Date().setDate(new Date().getDate() - 60))
+  /*const from = new Date(new Date().setDate(new Date().getDate() - 360))
     .toISOString()
     .slice(0, 10);
+*/
 
+  const from = new Date(new Date().setMonth(new Date().getMonth() - daterange))
+    .toISOString()
+    .slice(0, 10);
   const [stockData, setStockData] = useState([]);
   const [newsData, setNewsData] = useState([]);
 
@@ -50,7 +55,7 @@ const DashBoard = () => {
         setNewsLoading(false);
       });
     }
-  }, [user, isLoading, query, from, to, ticker]);
+  }, [user, isLoading, query, from, to, ticker, daterange]);
 
   const handleSave = () => {
     const uid = getUID();
@@ -62,8 +67,10 @@ const DashBoard = () => {
   const handleSearch = () => {
     const queryInput = document.getElementById("queryInput").value || "Apple";
     const tickerSelect = document.getElementById("tickerSelect").value;
+    const daterangeSelect = document.getElementById("dateRangeSelect").value;
     setQuery(queryInput);
     setTicker(tickerSelect);
+    setDaterange(daterangeSelect);
     // Trigger data fetch here
   };
 
@@ -81,7 +88,7 @@ const DashBoard = () => {
           Save{" "}
         </button>
       </div>
-      <div class="flex ml-10 flex-row justify-center h-100">
+      <div className="flex ml-10 flex-row justify-center h-100">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
         {newsLoading ? (
