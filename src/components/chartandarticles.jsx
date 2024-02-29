@@ -48,7 +48,7 @@ const ChartAndArticles = (props) => {
       </div>
       <div className="divider lg:divider-horizontal"></div>
       {articleElements.length === 0 ? (
-        <div className="w-64 h-100"></div>
+        <div className="w-64 h-100 mr-10"></div>
       ) : (
         <>
           <div className="overflow-y-scroll no-scrollbar w-64 h-100 mr-10">

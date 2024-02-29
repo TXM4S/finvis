@@ -88,11 +88,11 @@ const DashBoard = () => {
           Save{" "}
         </button>
       </div>
-      <div className="flex ml-10 flex-row justify-center h-100">
+      <div className="flex flex-row justify-center w-screen h-100">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
         {newsLoading ? (
-          <div className="flex-grow justify-center ml-10 self-center">
+          <div className="flex flex-grow ml-10 self-center justify-center w-full">
             <span className="loading loading-dots loading-lg"></span>
           </div>
         ) : (

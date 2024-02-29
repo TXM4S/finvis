@@ -1,7 +1,7 @@
 const SearchBar = (props) => {
   const handleSearch = props.handleSearch;
   return (
-    <div className="card w-fit bg-base-200 shadow-xl">
+    <div className="ml-10 card w-fit bg-base-200 shadow-xl">
       <div className="card-body flex-col justify-normal">
         <label className="form-control w-48">
           <div className="label">
