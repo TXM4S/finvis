@@ -1,4 +1,3 @@
-import LineChart from "./linechart";
 import Graph from "./graph";
 import Article from "./article";
 import GradientLegend from "./gradientlegend";
@@ -37,13 +36,6 @@ const ChartAndArticles = (props) => {
       <div className="card bg-base-200 shadow-xl">
         <div className="card-body flex flex-col items-center">
           <h2 className="card-title">{title}</h2>
-          {/*<LineChart
-            stockData={stockData}
-            newsData={newsData}
-            width={chartWidth}
-            height={chartHeight}
-            handleSetArticles={handleSetArticles}
-          />*/}
           <Graph
             stockData={stockData}
             newsData={newsData}
