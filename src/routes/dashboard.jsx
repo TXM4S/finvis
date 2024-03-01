@@ -19,12 +19,9 @@ const DashBoard = () => {
   const [ticker, setTicker] = useState("AAPL");
   const [newsLoading, setNewsLoading] = useState(true);
   const [daterange, setDaterange] = useState(12);
+  const [sentimentDomain, setSentimentDomain] = useState(1);
 
   const to = new Date().toISOString().slice(0, 10);
-  /*const from = new Date(new Date().setDate(new Date().getDate() - 360))
-    .toISOString()
-    .slice(0, 10);
-*/
 
   const from = new Date(new Date().setMonth(new Date().getMonth() - daterange))
     .toISOString()
@@ -55,7 +52,7 @@ const DashBoard = () => {
         setNewsLoading(false);
       });
     }
-  }, [user, isLoading, query, from, to, ticker, daterange]);
+  }, [user, isLoading, query, from, to, ticker, daterange, sentimentDomain]);
 
   const handleSave = () => {
     const uid = getUID();
@@ -68,10 +65,13 @@ const DashBoard = () => {
     const queryInput = document.getElementById("queryInput").value || "Apple";
     const tickerSelect = document.getElementById("tickerSelect").value;
     const daterangeSelect = document.getElementById("dateRangeSelect").value;
+    const sentimentDomainSelect = document.getElementById(
+      "sentimentDomainSelect",
+    ).value;
     setQuery(queryInput);
     setTicker(tickerSelect);
     setDaterange(daterangeSelect);
-    // Trigger data fetch here
+    setSentimentDomain(sentimentDomainSelect);
   };
 
   return isLoading ? (
@@ -88,7 +88,7 @@ const DashBoard = () => {
           Save{" "}
         </button>
       </div>
-      <div className="flex flex-row justify-center w-screen h-100">
+      <div className="flex flex-row justify-center w-screen h-110">
         <SearchBar handleSearch={handleSearch} />
         <div className="divider lg:divider-horizontal"></div>
         {newsLoading ? (
@@ -100,6 +100,7 @@ const DashBoard = () => {
             name={ticker + "&&" + query}
             stockData={stockData}
             newsData={newsData}
+            sentimentDomain={sentimentDomain}
           />
         )}
       </div>

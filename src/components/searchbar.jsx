@@ -42,6 +42,21 @@ const SearchBar = (props) => {
             <option value={12}>1 Year</option>
           </select>
         </label>
+        <label className="form-control w-full max-w-xs">
+          <div className="label">
+            <span className="label-text">Sentiment Domain:</span>
+          </div>
+          <select
+            defaultValue={1}
+            className="select select-bordered"
+            id="sentimentDomainSelect"
+          >
+            <option value={0.25}>-0.25 to 0.25</option>
+            <option value={0.5}>-0.5 to 0.5</option>
+            <option value={0.75}>-0.75 to 0.75</option>
+            <option value={1}>-1 to 1</option>
+          </select>
+        </label>
         <button className="btn btn-primary mt-auto" onClick={handleSearch}>
           Search
         </button>

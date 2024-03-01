@@ -1,11 +1,9 @@
-import * as d3 from "d3";
+import { getGradientColor } from "../utils/gradient";
 
 const GradientLegend = ({ width, height }) => {
-  const colorScale = d3.scaleSequential(d3.interpolateRdYlGn).domain([-1, 1]);
-
-  const colorStart = colorScale(-1);
-  const colorMid = colorScale(0);
-  const colorEnd = colorScale(1);
+  const colorStart = getGradientColor(1, -1);
+  const colorMid = getGradientColor(1, 0);
+  const colorEnd = getGradientColor(1, 1);
 
   return (
     <svg width={width} height={height}>

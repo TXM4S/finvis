@@ -1,5 +1,5 @@
 const Glyph = (props) => {
-  const { x, y, radius, color, handleClick } = props;
+  const { x, y, radius, color, handleClick, handleMouseOver } = props;
 
   return (
     <circle
@@ -9,6 +9,7 @@ const Glyph = (props) => {
       cy={y}
       fill={color}
       onMouseDown={handleClick}
+      onMouseOver={handleMouseOver}
       cursor={"pointer"}
     ></circle>
   );

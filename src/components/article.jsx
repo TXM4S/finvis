@@ -1,10 +1,8 @@
 import "../App.css";
-import * as d3 from "d3";
+import { getGradientColor } from "../utils/gradient";
 
 const Article = (props) => {
-  const { title, author, date, url, sentiment } = props;
-
-  const colorScale = d3.scaleSequential(d3.interpolateRdYlGn).domain([-1, 1]);
+  const { title, author, date, url, sentiment, sentimentDomain } = props;
 
   const stringDate = new Date(date).toLocaleDateString();
 
@@ -17,7 +15,9 @@ const Article = (props) => {
         {/*sentiment > 0 ? positive : sentiment < 0 ? negative : neutral*/}
         <div
           className="badge text-base-200"
-          style={{ backgroundColor: colorScale(sentiment) }}
+          style={{
+            backgroundColor: getGradientColor(sentimentDomain, sentiment),
+          }}
         >
           {" "}
           {text}

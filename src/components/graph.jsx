@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 import Glyph from "./glyph";
+import { getGradientColor } from "../utils/gradient";
 import { useState, useEffect } from "react";
 
 const Graph = (props) => {
-  const { stockData, newsData, handleSetArticles } = props;
+  const { stockData, newsData, handleSetArticles, sentimentDomain } = props;
   const margin = { top: 30, right: 30, bottom: 30, left: 30 };
   let width = props.width - margin.left - margin.right;
   let height = props.height - margin.top - margin.bottom;
@@ -32,9 +33,6 @@ const Graph = (props) => {
     .defined((d) => !isNaN(d.c) && d.c != null)
     .x((d) => x(d.t))
     .y((d) => y(d.c));
-
-  const colorScale = d3.scaleSequential(d3.interpolateRdYlGn);
-  colorScale.domain([-1, 1]);
 
   const setupXAxis = () => {
     if (x == null || y == null) return;
@@ -127,7 +125,10 @@ const Graph = (props) => {
 
       console.log(currentAvgSentiment);
 
-      const currentColor = colorScale(currentAvgSentiment);
+      const currentColor = getGradientColor(
+        sentimentDomain,
+        currentAvgSentiment,
+      );
       console.log(currentColor);
 
       const glyphX = x(timestamp);
@@ -149,12 +150,30 @@ const Graph = (props) => {
           radius={currentRadius}
           color={currentColor}
           handleClick={() => handleSetArticles(currentDaysArticles)}
+          handleMouseOver={(event) => addToolTip(event)}
         />,
       ]);
 
       // reorder the glyphs to be on top
       d3.select("#glyphContainer").raise();
     }
+  };
+
+  const addToolTip = (event) => {
+    const svg = d3.select("#container");
+    console.log(event.target);
+
+    d3.select("#tooltip").remove();
+
+    const tooltip = svg.append("g").attr("id", "tooltip");
+    tooltip
+      .append("rect")
+      .attr("x", event.target.cx)
+      .attr("y", event.target.cy)
+      .attr("fill", "white")
+      .attr("width", 100)
+      .attr("height", 20)
+      .raise();
   };
 
   const addDoubleClick = () => {
