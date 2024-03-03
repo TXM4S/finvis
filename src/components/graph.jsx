@@ -37,11 +37,11 @@ const Graph = (props) => {
   const setupXAxis = () => {
     if (x == null || y == null) return;
 
-    let svg = d3.select("#container");
+    let container = d3.select("#container");
 
     d3.select("#xAxis").remove();
 
-    svg
+    container
       .append("g")
       .attr("id", "xAxis")
       .attr("transform", "translate(0," + height + ")")
@@ -51,17 +51,17 @@ const Graph = (props) => {
   const setupYAxis = () => {
     if (x == null || y == null) return;
 
-    let svg = d3.select("#container");
+    let container = d3.select("#container");
     d3.select("#yAxis").remove();
-    svg.append("g").attr("id", "yAxis").call(d3.axisLeft(y));
+    container.append("g").attr("id", "yAxis").call(d3.axisLeft(y));
   };
 
   const setupLine = () => {
-    const svg = d3.select("#container");
+    const container = d3.select("#container");
 
     d3.select("#solid-line").remove();
 
-    let DOMLine = svg
+    let DOMLine = container
       .append("g")
       .attr("id", "solid-line")
       .attr("clip-path", "url(#clip)");
@@ -74,13 +74,13 @@ const Graph = (props) => {
   };
 
   const setupGapLine = () => {
-    const svg = d3.select("#container");
+    const container = d3.select("#container");
 
     const filteredData = stockData.filter(line.defined());
 
     d3.select("#gap-line").remove();
 
-    let DOMLine = svg
+    let DOMLine = container
       .append("g")
       .attr("id", "gap-line")
       .attr("clip-path", "url(#clip)");
@@ -93,11 +93,11 @@ const Graph = (props) => {
   };
 
   const setupBrush = () => {
-    const svg = d3.select("#container");
+    const container = d3.select("#container");
 
     d3.select(".brush").remove();
 
-    svg.append("g").attr("class", "brush").call(brush);
+    container.append("g").attr("class", "brush").call(brush);
   };
 
   const setupGlyphs = () => {
@@ -150,7 +150,15 @@ const Graph = (props) => {
           radius={currentRadius}
           color={currentColor}
           handleClick={() => handleSetArticles(currentDaysArticles)}
-          handleMouseOver={(event) => addToolTip(event)}
+          handleMouseOver={() =>
+            addToolTip(
+              dataPoint.c || dataPoint.ec,
+              oneDayWidth * 0.5,
+              currentLength,
+              timestamp,
+              currentAvgSentiment,
+            )
+          }
         />,
       ]);
 
@@ -159,21 +167,103 @@ const Graph = (props) => {
     }
   };
 
-  const addToolTip = (event) => {
-    const svg = d3.select("#container");
-    console.log(event.target);
+  const removeToolTip = () => {
+    d3.select("#tooltip").remove();
+  };
+
+  const addToolTip = (
+    closePrice,
+    offset,
+    noArticles,
+    timestamp,
+    avgSentiment,
+  ) => {
+    const container = d3.select("#container");
 
     d3.select("#tooltip").remove();
 
-    const tooltip = svg.append("g").attr("id", "tooltip");
+    const domainZero = x.domain()[0].getTime();
+    const domainOne = x.domain()[1].getTime();
+    const midpoint = domainZero + (domainOne - domainZero) / 2;
+
+    const isright = timestamp > midpoint;
+    console.log(timestamp);
+    console.log(midpoint);
+    console.log(isright);
+    console.log(new Date(timestamp).toDateString());
+
+    const width = 180;
+    const height = 70;
+    const circleX = x(timestamp);
+    const circleY = y(closePrice);
+    const tooltipX = circleX + (isright ? -(width + 15) : 15);
+    const tooltipY = circleY - height / 2;
+    const highlightX = circleX + (isright ? -20 : 15);
+    const trianglePoints = isright
+      ? circleX +
+        "," +
+        circleY +
+        " " +
+        (circleX - 20) +
+        "," +
+        (circleY + 10) +
+        " " +
+        (circleX - 20) +
+        "," +
+        (circleY - 10)
+      : circleX +
+        "," +
+        circleY +
+        " " +
+        (circleX + 20) +
+        "," +
+        (circleY + 10) +
+        " " +
+        (circleX + 20) +
+        "," +
+        (circleY - 10);
+
+    let tooltip = container.append("g").attr("id", "tooltip");
     tooltip
       .append("rect")
-      .attr("x", event.target.cx)
-      .attr("y", event.target.cy)
-      .attr("fill", "white")
-      .attr("width", 100)
-      .attr("height", 20)
-      .raise();
+      .attr("id", "tooltip-rect")
+      .attr("class", "stroke-base-200 fill-neutral shadow-lg")
+      .attr("stroke-width", 1)
+      .attr("x", tooltipX)
+      .attr("y", tooltipY)
+      .attr("rx", 5)
+      .attr("width", width)
+      .attr("height", height);
+    tooltip
+      .append("rect")
+      .attr("class", "fill-primary")
+      .attr("x", highlightX)
+      .attr("y", tooltipY)
+      .attr("width", 5)
+      .attr("height", height);
+    tooltip
+      .append("polygon")
+      .attr("points", trianglePoints)
+      .attr("class", "fill-primary");
+    tooltip
+      .append("text")
+      .attr("class", "font-bold fill-neutral-content")
+      .attr("id", "tooltip-text")
+      .attr("x", tooltipX + 10)
+      .attr("y", tooltipY + 20)
+      .text(new Date(timestamp * 1).toDateString());
+    tooltip
+      .append("text")
+      .attr("class", "font-bold fill-neutral-content")
+      .attr("x", tooltipX + 10)
+      .attr("y", tooltipY + 40)
+      .text("Articles: " + noArticles);
+    tooltip
+      .append("text")
+      .attr("class", "font-bold fill-neutral-content")
+      .attr("x", tooltipX + 10)
+      .attr("y", tooltipY + 60)
+      .text("Avg Sentiment: " + avgSentiment.toFixed(2));
   };
 
   const addDoubleClick = () => {
@@ -214,6 +304,7 @@ const Graph = (props) => {
     setupGapLine();
     setupBrush();
     setupGlyphs();
+    removeToolTip();
   };
 
   useEffect(() => {
@@ -233,7 +324,9 @@ const Graph = (props) => {
         id="container"
         transform={"translate(" + margin.left + "," + margin.top + ")"}
       >
-        <g id="glyphContainer">{glyphs}</g>
+        <g clipPath="url(#clip)" id="glyphContainer">
+          {glyphs}
+        </g>
       </g>
     </svg>
   );
